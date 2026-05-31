@@ -175,7 +175,7 @@ function ServicesAdmin() {
     e.preventDefault();
     if (form.id) {
       const { id, ...rest } = form;
-      const { error } = await supabase.from("services").update(rest).eq("id", id);
+      const { error } = await supabase.from("services").update(rest).eq("id", id as string);
       if (error) return toast.error(error.message);
       toast.success("Updated");
     } else {

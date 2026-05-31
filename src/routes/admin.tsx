@@ -44,6 +44,7 @@ function Admin() {
 }
 
 function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ error: string | null }> }) {
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -51,10 +52,34 @@ function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ err
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
-    const { error } = await signIn(email, password);
+    if (mode === "signin") {
+      const { error } = await signIn(email, password);
+      setBusy(false);
+      if (error) toast.error(error);
+      else toast.success("Signed in");
+      return;
+    }
+    // signup
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: `${window.location.origin}/admin` },
+    });
+    if (error) {
+      setBusy(false);
+      return toast.error(error.message);
+    }
+    // Try to sign in immediately (auto-confirm is on)
+    const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+    if (signInErr) {
+      setBusy(false);
+      return toast.success("Account created. Please sign in.");
+    }
+    // Claim admin role if no admin exists yet (first user becomes owner)
+    const { data: claimed } = await supabase.rpc("claim_admin_if_first");
     setBusy(false);
-    if (error) toast.error(error);
-    else toast.success("Signed in");
+    if (claimed) toast.success("Welcome! You're the admin owner.");
+    else toast.success("Account created.");
   };
 
   return (
@@ -68,8 +93,29 @@ function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ err
             </div>
           </div>
         </div>
-        <h1 className="font-display text-2xl font-bold text-center mb-2">Admin Portal</h1>
-        <p className="text-sm text-muted-foreground text-center mb-8">Restricted access. Authorized accounts only.</p>
+        <h1 className="font-display text-2xl font-bold text-center mb-2">
+          {mode === "signin" ? "Admin Portal" : "Create account"}
+        </h1>
+        <p className="text-sm text-muted-foreground text-center mb-6">
+          {mode === "signin"
+            ? "Sign in to manage your site."
+            : "The first account becomes the admin owner."}
+        </p>
+
+        <div className="flex gap-2 mb-6 p-1 glass rounded-xl">
+          {(["signin", "signup"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setMode(m)}
+              className={`flex-1 py-2 rounded-lg text-xs font-medium capitalize transition-all ${
+                mode === m ? "gradient-primary text-primary-foreground" : "text-muted-foreground"
+              }`}
+            >
+              {m === "signin" ? "Sign in" : "Sign up"}
+            </button>
+          ))}
+        </div>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
@@ -78,13 +124,13 @@ function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ err
               required type="email" value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full glass rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-              placeholder="admin@example.com"
+              placeholder="you@example.com"
             />
           </div>
           <div>
             <label className="text-xs uppercase tracking-wider text-muted-foreground mb-2 block">Password</label>
             <input
-              required type="password" value={password}
+              required type="password" value={password} minLength={6}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full glass rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
               placeholder="••••••••"
@@ -94,17 +140,14 @@ function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ err
             type="submit" disabled={busy}
             className="btn-3d w-full gradient-primary text-primary-foreground font-semibold py-3.5 rounded-xl disabled:opacity-60"
           >
-            {busy ? "Signing in..." : "Sign in"}
+            {busy ? "Please wait..." : mode === "signin" ? "Sign in" : "Create account"}
           </button>
         </form>
-
-        <p className="text-xs text-muted-foreground text-center mt-6">
-          No public sign-up. Contact the site owner to request access.
-        </p>
       </div>
     </div>
   );
 }
+
 
 function NotAuthorized({ email, signOut }: { email: string; signOut: () => void }) {
   return (

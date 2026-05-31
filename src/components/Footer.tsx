@@ -32,10 +32,12 @@ export function Footer() {
             <h4 className="font-display font-semibold mb-3 text-sm">Get in touch</h4>
             <div className="flex flex-col gap-2 text-sm">
               <a href="mailto:hello@meerabimran.com" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <Mail className="h-4 w-4" /> hello@meerabimran.com
+                <Mail className="h-4 w-4" />
+                <span>hello@meerabimran.com</span>
               </a>
               <a href="https://wa.me/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <MessageCircle className="h-4 w-4" /> WhatsApp
+                <MessageCircle className="h-4 w-4" />
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>

@@ -53,17 +53,20 @@ function About() {
 
         <div className="animate-fade-up delay-200">
           <h2 className="font-display text-3xl font-bold mb-4">
-            Hi, I'm <span className="gradient-text">Meerab</span>
+            Hi, I'm <span className="gradient-text">Meerab Imran</span>
           </h2>
           <p className="text-muted-foreground mb-4 leading-relaxed">
-            I'm a multidisciplinary creative blending code, design, and storytelling into work that
-            moves people. Over the years I've helped startups launch, brands rebrand, and creators
-            grow — all from a single freelance studio built on craft.
+            I'm a web developer and programmer from <span className="text-foreground">Pakistan</span>, currently
+            a college student turning late-night code into real products for clients around the world.
+            Freelancing is where I built my craft — and so far every client I've worked with has
+            walked away with glowing reviews.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Whether it's a SaaS landing page that converts, a brand identity that sings, or a video
-            edit that hooks viewers in the first three seconds — I sweat every pixel and every word.
+            From clean, responsive websites to full-stack apps and polished brand experiences, I focus
+            on writing thoughtful code and shipping work that feels considered. If you have an idea,
+            I'd love to help you bring it to life.
           </p>
+
 
           <div className="grid grid-cols-3 gap-4 mt-8">
             {[

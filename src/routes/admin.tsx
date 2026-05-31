@@ -254,7 +254,7 @@ function PortfolioAdmin() {
     const payload = { ...form, price: form.price || null, description: form.description || null };
     if (form.id) {
       const { id, ...rest } = payload;
-      const { error } = await supabase.from("portfolio_items").update(rest).eq("id", id);
+      const { error } = await supabase.from("portfolio_items").update(rest).eq("id", id as string);
       if (error) return toast.error(error.message);
       toast.success("Updated");
     } else {

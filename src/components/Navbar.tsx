@@ -2,19 +2,22 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/portfolio", label: "Portfolio" },
-  { to: "/feedback", label: "Feedback" },
-] as const;
+import { useSettings } from "@/hooks/useSettings";
+import { SettingsMenu } from "@/components/SettingsMenu";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { location } = useRouterState();
   const { isAdmin } = useAuth();
+  const { t } = useSettings();
+
+  const links = [
+    { to: "/", label: t("home") },
+    { to: "/about", label: t("about") },
+    { to: "/services", label: t("services") },
+    { to: "/portfolio", label: t("portfolio") },
+    { to: "/feedback", label: t("feedback") },
+  ] as const;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
@@ -51,27 +54,31 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:flex items-center gap-2">
+          <SettingsMenu />
           <Link
             to="/admin"
             className="text-xs px-3 py-1.5 rounded-lg text-muted-foreground hover:text-foreground transition-colors"
           >
-            {isAdmin ? "Dashboard" : "Admin"}
+            {isAdmin ? t("dashboard") : t("admin")}
           </Link>
           <Link
             to="/feedback"
             className="btn-3d gradient-primary text-primary-foreground font-medium text-sm px-5 py-2 rounded-lg"
           >
-            Hire Me
+            {t("hire")}
           </Link>
         </div>
 
-        <button
-          className="md:hidden p-2 text-foreground"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <SettingsMenu />
+          <button
+            className="p-2 text-foreground"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {open && (
@@ -90,7 +97,7 @@ export function Navbar() {
             ))}
             <li>
               <Link to="/admin" onClick={() => setOpen(false)} className="block px-3 py-2 rounded-lg text-sm hover:bg-primary/10">
-                {isAdmin ? "Dashboard" : "Admin"}
+                {isAdmin ? t("dashboard") : t("admin")}
               </Link>
             </li>
           </ul>

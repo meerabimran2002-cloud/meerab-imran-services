@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Lock, LogOut, Plus, Trash2, Pencil, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -342,7 +342,7 @@ function PortfolioAdmin() {
         <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm bg-background/40">
           {["Web", "App", "Design", "Video", "Writing"].map((c) => <option key={c} value={c} className="bg-background">{c}</option>)}
         </select>
-        <input required placeholder="Image URL" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm" />
+        <ImageUploader value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
         <input placeholder="Price (e.g. $500)" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm" />
         <textarea placeholder="Description" rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm resize-none" />
         <div className="flex gap-2">
@@ -391,6 +391,80 @@ function FeedbackAdmin() {
           </p>
         </div>
       ))}
+    </div>
+  );
+}
+
+function ImageUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const upload = async (file: File) => {
+    if (!file.type.startsWith("image/")) return toast.error("Please pick an image");
+    if (file.size > 5 * 1024 * 1024) return toast.error("Max 5MB");
+    setUploading(true);
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await supabase.storage.from("portfolio").upload(path, file, {
+      cacheControl: "31536000",
+      upsert: false,
+      contentType: file.type,
+    });
+    if (error) {
+      setUploading(false);
+      return toast.error(error.message);
+    }
+    const { data, error: signErr } = await supabase.storage
+      .from("portfolio")
+      .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+    setUploading(false);
+    if (signErr || !data) return toast.error(signErr?.message || "Failed to get URL");
+    onChange(data.signedUrl);
+    toast.success("Image uploaded");
+  };
+
+  return (
+    <div className="space-y-2">
+      <label className="text-xs uppercase tracking-wider text-muted-foreground block">Image</label>
+      {value && (
+        <img src={value} alt="preview" className="w-full h-32 object-cover rounded-lg border border-border/40" />
+      )}
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) upload(f);
+          e.target.value = "";
+        }}
+      />
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          disabled={uploading}
+          className="btn-3d flex-1 glass rounded-lg py-2 text-sm font-medium disabled:opacity-60"
+        >
+          {uploading ? "Uploading..." : value ? "Replace image" : "Upload image"}
+        </button>
+        {value && (
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="glass rounded-lg px-3 text-sm hover:bg-destructive/20"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+      <input
+        placeholder="…or paste image URL"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full glass rounded-lg px-3 py-2 text-xs"
+      />
     </div>
   );
 }

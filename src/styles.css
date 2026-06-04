@@ -90,8 +90,52 @@
   --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.dark {
-  /* Same dark — site is dark-only */
+.dark { /* site is dark-only */ }
+
+/* ===== Dark theme variants (selected via data-theme on <html>) ===== */
+[data-theme="midnight"] {
+  --primary: oklch(0.68 0.18 250);
+  --primary-glow: oklch(0.78 0.18 230);
+  --secondary: oklch(0.58 0.18 230);
+  --accent: oklch(0.78 0.16 210);
+  --ring: oklch(0.68 0.18 250);
+  --background: oklch(0.09 0.03 250);
+  --gradient-primary: linear-gradient(135deg, oklch(0.55 0.20 250), oklch(0.70 0.18 220));
+  --gradient-text: linear-gradient(135deg, oklch(0.98 0.01 250), oklch(0.80 0.18 240), oklch(0.78 0.20 220));
+  --shadow-glow: 0 0 60px -10px oklch(0.68 0.18 250 / 55%);
+}
+[data-theme="emerald"] {
+  --primary: oklch(0.72 0.18 165);
+  --primary-glow: oklch(0.80 0.18 175);
+  --secondary: oklch(0.60 0.15 185);
+  --accent: oklch(0.78 0.14 155);
+  --ring: oklch(0.72 0.18 165);
+  --background: oklch(0.10 0.025 175);
+  --gradient-primary: linear-gradient(135deg, oklch(0.60 0.18 165), oklch(0.55 0.14 195));
+  --gradient-text: linear-gradient(135deg, oklch(0.98 0.01 175), oklch(0.82 0.18 165), oklch(0.78 0.16 195));
+  --shadow-glow: 0 0 60px -10px oklch(0.72 0.18 165 / 55%);
+}
+[data-theme="crimson"] {
+  --primary: oklch(0.65 0.22 25);
+  --primary-glow: oklch(0.78 0.18 55);
+  --secondary: oklch(0.60 0.20 40);
+  --accent: oklch(0.78 0.18 65);
+  --ring: oklch(0.65 0.22 25);
+  --background: oklch(0.10 0.03 25);
+  --gradient-primary: linear-gradient(135deg, oklch(0.60 0.22 25), oklch(0.72 0.18 55));
+  --gradient-text: linear-gradient(135deg, oklch(0.98 0.01 30), oklch(0.78 0.22 25), oklch(0.80 0.18 55));
+  --shadow-glow: 0 0 60px -10px oklch(0.65 0.22 25 / 55%);
+}
+[data-theme="slate"] {
+  --primary: oklch(0.72 0.04 260);
+  --primary-glow: oklch(0.82 0.03 260);
+  --secondary: oklch(0.55 0.04 260);
+  --accent: oklch(0.78 0.03 240);
+  --ring: oklch(0.72 0.04 260);
+  --background: oklch(0.11 0.01 260);
+  --gradient-primary: linear-gradient(135deg, oklch(0.45 0.03 260), oklch(0.70 0.04 260));
+  --gradient-text: linear-gradient(135deg, oklch(0.98 0.005 260), oklch(0.85 0.02 260), oklch(0.70 0.03 260));
+  --shadow-glow: 0 0 60px -10px oklch(0.72 0.04 260 / 50%);
 }
 
 @layer base {

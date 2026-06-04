@@ -342,7 +342,7 @@ function PortfolioAdmin() {
         <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm bg-background/40">
           {["Web", "App", "Design", "Video", "Writing"].map((c) => <option key={c} value={c} className="bg-background">{c}</option>)}
         </select>
-        <input required placeholder="Image URL" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm" />
+        <ImageUploader value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
         <input placeholder="Price (e.g. $500)" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm" />
         <textarea placeholder="Description" rows={2} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full glass rounded-lg px-3 py-2 text-sm resize-none" />
         <div className="flex gap-2">

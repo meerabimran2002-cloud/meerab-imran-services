@@ -17,6 +17,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { AuthProvider } from "@/hooks/useAuth";
 import { SettingsProvider } from "@/hooks/useSettings";
 import { Toaster } from "@/components/ui/sonner";
+import { AiAssistant } from "@/components/AiAssistant";
 
 function NotFoundComponent() {
   return (
@@ -115,6 +116,7 @@ function RootComponent() {
             <Outlet />
           </main>
           <Footer />
+          <AiAssistant />
           <Toaster />
         </AuthProvider>
       </SettingsProvider>

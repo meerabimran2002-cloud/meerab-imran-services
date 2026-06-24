@@ -76,10 +76,16 @@ function LoginCard({ signIn }: { signIn: (e: string, p: string) => Promise<{ err
       return toast.success("Account created. Please sign in.");
     }
     // Claim admin role if no admin exists yet (first user becomes owner)
-    const { data: claimed } = await supabase.rpc("claim_admin_if_first");
-    setBusy(false);
-    if (claimed) toast.success("Welcome! You're the admin owner.");
-    else toast.success("Account created.");
+    try {
+      const { claimAdminIfFirst } = await import("@/lib/admin.functions");
+      const result = await claimAdminIfFirst();
+      setBusy(false);
+      if (result?.claimed) toast.success("Welcome! You're the admin owner.");
+      else toast.success("Account created.");
+    } catch {
+      setBusy(false);
+      toast.success("Account created.");
+    }
   };
 
   return (

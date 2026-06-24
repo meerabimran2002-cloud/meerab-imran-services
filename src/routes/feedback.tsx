@@ -40,8 +40,8 @@ function Feedback() {
   const [submitting, setSubmitting] = useState(false);
 
   const load = async () => {
-    const { data } = await supabase
-      .from("feedback")
+    const { data } = await (supabase as any)
+      .from("feedback_public")
       .select("id, name, rating, message, created_at")
       .order("created_at", { ascending: false })
       .limit(30);

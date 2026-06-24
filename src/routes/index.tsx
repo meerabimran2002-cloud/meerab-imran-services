@@ -1,15 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Sparkles, Zap, Star } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { ServiceIcon } from "@/components/ServiceIcon";
-import heroBg from "@/assets/hero-bg.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Meerab Imran — Creative Digital Services" },
-      { name: "description", content: "Freelance design, development, and creative content. Web, app, branding, video editing and more." },
+      { title: "Meerab Imran — Web Developer & Programmer" },
+      { name: "description", content: "Freelance web developer and programmer from Pakistan. Building performance-heavy digital experiences with surgical precision." },
     ],
   }),
   component: Home,
@@ -23,6 +21,8 @@ interface Service {
   price_range: string;
 }
 
+const mono = "font-mono text-[11px] uppercase tracking-[0.18em]";
+
 function Home() {
   const [services, setServices] = useState<Service[]>([]);
 
@@ -33,136 +33,111 @@ function Home() {
   }, []);
 
   return (
-    <>
+    <div className="mx-auto max-w-6xl px-6">
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10 opacity-50"
-          style={{ backgroundImage: `url(${heroBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/60 via-background/80 to-background" />
+      <section className="relative pt-10 pb-32">
+        <div className={`${mono} text-primary mb-8 flex items-center gap-2`}>
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+          [ status: available_for_work ]
+        </div>
 
-        <div className="mx-auto max-w-6xl px-6 py-24 md:py-36 text-center">
-          <div className="inline-flex items-center gap-2 glass px-4 py-1.5 rounded-full text-xs text-muted-foreground mb-6 animate-fade-up">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            <span>Available for new projects</span>
-          </div>
+        <h1
+          className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter"
+          style={{ WebkitTextStroke: "1px rgba(255,255,255,0.12)", color: "transparent" }}
+        >
+          Meerab
+        </h1>
+        <h1 className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-primary -mt-[2vw]">
+          Imran
+        </h1>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight animate-fade-up delay-100">
-            Creative Digital
-            <br />
-            <span className="gradient-text">Services by</span>
-            <br />
-            Meerab Imran
-          </h1>
-
-          <p className="mt-6 max-w-2xl mx-auto text-base md:text-lg text-muted-foreground animate-fade-up delay-200">
-            Design, development, video, and storytelling — crafted at agency quality, delivered with freelance speed.
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+          <p className="md:col-span-7 text-xl md:text-2xl leading-snug font-light text-foreground/90 max-w-xl">
+            A programmer and web developer from Pakistan, building performance-heavy digital experiences with surgical precision.
           </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 animate-fade-up delay-300">
-            <Link
-              to="/feedback"
-              className="btn-3d gradient-primary text-primary-foreground font-semibold px-7 py-3.5 rounded-xl inline-flex items-center gap-2"
-            >
-              Hire Me <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/services"
-              className="btn-3d glass-card font-semibold px-7 py-3.5 rounded-xl"
-            >
-              View Services
-            </Link>
-          </div>
-
-          {/* stats */}
-          <div className="mt-20 grid grid-cols-3 gap-6 max-w-2xl mx-auto animate-fade-up delay-500">
-            {[
-              { v: "120+", l: "Projects shipped" },
-              { v: "4.9★", l: "Avg. client rating" },
-              { v: "12", l: "Service categories" },
-            ].map((s) => (
-              <div key={s.l} className="glass-card rounded-2xl p-5">
-                <div className="text-2xl md:text-3xl font-display font-bold gradient-text">{s.v}</div>
-                <div className="text-xs text-muted-foreground mt-1">{s.l}</div>
-              </div>
-            ))}
+          <div className={`md:col-span-5 ${mono} flex flex-col items-start md:items-end gap-1`}>
+            <span className="text-primary">01 // FULL-STACK DEVELOPER</span>
+            <span className="opacity-60">Karachi · Remote worldwide</span>
           </div>
         </div>
 
-        {/* Floating orbs */}
-        <div className="absolute top-1/4 left-10 h-3 w-3 rounded-full bg-primary animate-glow-pulse glow" />
-        <div className="absolute top-1/2 right-16 h-4 w-4 rounded-full bg-accent animate-glow-pulse" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute bottom-1/4 left-1/4 h-2 w-2 rounded-full bg-secondary animate-glow-pulse" style={{ animationDelay: "3s" }} />
-      </section>
-
-      {/* INTRO */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { icon: Zap, title: "Lightning fast", desc: "Most projects ship in days, not weeks." },
-            { icon: Star, title: "Agency quality", desc: "Studio-grade craft at freelance prices." },
-            { icon: Sparkles, title: "End-to-end", desc: "Design, build, content — one team." },
-          ].map((f) => (
-            <div key={f.title} className="glass-card lift-3d rounded-2xl p-8">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl gradient-primary mb-4 glow">
-                <f.icon className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <h3 className="font-display text-xl font-semibold mb-2">{f.title}</h3>
-              <p className="text-sm text-muted-foreground">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURED SERVICES */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-primary mb-2">What I do</p>
-            <h2 className="font-display text-4xl md:text-5xl font-bold">Featured services</h2>
-          </div>
-          <Link to="/services" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-            All services <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((s) => (
-            <Link
-              key={s.id}
-              to="/services"
-              className="glass-card lift-3d rounded-2xl p-6 group"
-            >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 border border-primary/20 mb-4 group-hover:gradient-primary group-hover:border-transparent transition-all">
-                <ServiceIcon name={s.icon} className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors" />
-              </div>
-              <h3 className="font-display text-lg font-semibold mb-2">{s.name}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{s.description}</p>
-              <div className="text-xs gradient-text font-semibold">{s.price_range}</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="glass-card rounded-3xl p-12 md:p-20 text-center relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 opacity-50" style={{ background: "var(--gradient-glow)" }} />
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
-            Have a project in mind?
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            Let's turn your idea into something the internet can't ignore.
-          </p>
+        <div className="mt-12 flex flex-wrap gap-3">
           <Link
             to="/feedback"
-            className="btn-3d gradient-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl inline-flex items-center gap-2"
+            className="group inline-flex items-center gap-3 bg-primary text-primary-foreground font-bold uppercase tracking-wider text-sm px-6 py-4 hover:bg-foreground transition-colors"
           >
-            Start a conversation <ArrowRight className="h-4 w-4" />
+            Hire Me <ArrowUpRight className="h-4 w-4 group-hover:rotate-45 transition-transform" />
+          </Link>
+          <Link
+            to="/portfolio"
+            className="inline-flex items-center gap-3 border border-white/15 hover:border-primary text-foreground font-bold uppercase tracking-wider text-sm px-6 py-4 transition-colors"
+          >
+            View Works
           </Link>
         </div>
       </section>
-    </>
+
+      {/* MARQUEE STATS */}
+      <section className="border-y border-white/10 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        {[
+          { v: "120+", l: "Projects" },
+          { v: "4.9★", l: "Avg. Rating" },
+          { v: "12", l: "Categories" },
+          { v: "24h", l: "Avg. Response" },
+        ].map((s) => (
+          <div key={s.l}>
+            <div className="text-3xl md:text-4xl font-extrabold text-primary">{s.v}</div>
+            <div className={`${mono} opacity-60 mt-1`}>{s.l}</div>
+          </div>
+        ))}
+      </section>
+
+      {/* SERVICES */}
+      <section className="py-24">
+        <div className="flex justify-between items-baseline mb-10 border-b border-white/10 pb-4">
+          <h2 className="text-3xl md:text-5xl font-bold uppercase">Services</h2>
+          <span className={`${mono} text-primary`}>/ Capabilities</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 border-l border-t border-white/10">
+          {(services.length ? services.slice(0, 6) : Array.from({ length: 3 })).map((s: any, i) => (
+            <Link
+              to="/services"
+              key={s?.id ?? i}
+              className="p-10 border-r border-b border-white/10 group hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
+            >
+              <span className={`${mono} mb-8 block`}>
+                {String(i + 1).padStart(2, "0")} / {s?.name ? "Service" : "Loading"}
+              </span>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 uppercase">{s?.name ?? "—"}</h3>
+              <p className="text-sm leading-relaxed opacity-70 group-hover:opacity-100 line-clamp-3">
+                {s?.description ?? "Add services from the admin panel."}
+              </p>
+              {s?.price_range && (
+                <div className={`${mono} mt-6 opacity-80 group-hover:opacity-100`}>{s.price_range}</div>
+              )}
+            </Link>
+          ))}
+        </div>
+        <div className="mt-6">
+          <Link to="/services" className={`${mono} text-primary inline-flex items-center gap-2 hover:gap-3 transition-all`}>
+            All services <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </section>
+
+      {/* CTA BLOCK */}
+      <section className="my-24 bg-primary text-primary-foreground p-12 md:p-20">
+        <span className={`${mono} font-bold block mb-8`}>// Let's build something</span>
+        <h2 className="text-4xl md:text-6xl font-extrabold uppercase leading-[0.95] tracking-tighter max-w-3xl">
+          Got a project that needs surgical precision?
+        </h2>
+        <Link
+          to="/feedback"
+          className="mt-10 inline-flex items-center gap-3 bg-background text-foreground font-bold uppercase tracking-wider text-sm px-6 py-4 hover:bg-foreground hover:text-background transition-colors"
+        >
+          Start a conversation <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </section>
+    </div>
   );
 }

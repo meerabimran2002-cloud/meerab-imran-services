@@ -127,10 +127,32 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      feedback_public: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          message: string | null
+          name: string | null
+          rating: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          message?: string | null
+          name?: string | null
+          rating?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          message?: string | null
+          name?: string | null
+          rating?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      claim_admin_if_first: { Args: never; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

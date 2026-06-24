@@ -57,7 +57,6 @@ function Home() {
           </p>
           <div className={`md:col-span-5 ${mono} flex flex-col items-start md:items-end gap-1`}>
             <span className="text-primary">01 // FULL-STACK DEVELOPER</span>
-            <span className="opacity-60">Karachi · Remote worldwide</span>
           </div>
         </div>
 

@@ -192,9 +192,9 @@
     will-change: transform;
   }
   .lift-3d:hover {
-    transform: translateY(-8px) perspective(800px) rotateX(4deg);
-    border-color: oklch(0.70 0.22 295 / 40%);
-    box-shadow: var(--shadow-glow), 0 20px 40px -10px oklch(0 0 0 / 60%);
+    transform: translateY(-4px);
+    border-color: oklch(0.94 0.24 122 / 40%);
+    box-shadow: 0 12px 24px -10px oklch(0 0 0 / 50%);
   }
 
   .btn-3d {

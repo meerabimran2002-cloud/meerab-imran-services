@@ -71,6 +71,48 @@ export type Database = {
         }
         Relationships: []
       }
+      service_orders: {
+        Row: {
+          created_at: string
+          currency: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          phone: string | null
+          service_id: string | null
+          service_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          phone?: string | null
+          service_id?: string | null
+          service_name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          phone?: string | null
+          service_id?: string | null
+          service_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string

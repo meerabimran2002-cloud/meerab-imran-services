@@ -26,6 +26,11 @@ interface PortfolioItem {
 interface FeedbackRow {
   id: string; name: string; email: string; rating: number; message: string; created_at: string;
 }
+interface OrderRow {
+  id: string; name: string; email: string; phone: string | null;
+  service_name: string; message: string | null; currency: string;
+  status: string; created_at: string;
+}
 
 function Admin() {
   const { user, isAdmin, loading, signIn, signOut } = useAuth();
@@ -176,7 +181,14 @@ function NotAuthorized({ email, signOut }: { email: string; signOut: () => void 
 }
 
 function Dashboard({ onSignOut }: { onSignOut: () => void }) {
-  const [tab, setTab] = useState<"services" | "portfolio" | "feedback">("services");
+  const [tab, setTab] = useState<"orders" | "services" | "portfolio" | "feedback">("orders");
+  const [newCount, setNewCount] = useState(0);
+
+  useEffect(() => {
+    supabase.from("service_orders").select("id", { count: "exact", head: true }).eq("status", "new")
+      .then(({ count }) => setNewCount(count ?? 0));
+  }, [tab]);
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
@@ -189,23 +201,133 @@ function Dashboard({ onSignOut }: { onSignOut: () => void }) {
         </button>
       </div>
 
-      <div className="flex gap-2 mb-6">
-        {(["services", "portfolio", "feedback"] as const).map((t) => (
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {(["orders", "services", "portfolio", "feedback"] as const).map((tk) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`px-5 py-2 rounded-lg text-sm font-medium capitalize transition-all ${
-              tab === t ? "gradient-primary text-primary-foreground" : "glass hover:bg-primary/10"
+            key={tk}
+            onClick={() => setTab(tk)}
+            className={`relative px-5 py-2 rounded-lg text-sm font-medium capitalize transition-all ${
+              tab === tk ? "gradient-primary text-primary-foreground" : "glass hover:bg-primary/10"
             }`}
           >
-            {t}
+            {tk === "orders" ? "Hire Requests" : tk}
+            {tk === "orders" && newCount > 0 && (
+              <span className="ml-2 inline-flex h-5 min-w-5 px-1.5 items-center justify-center rounded-full bg-red-500 text-white text-[10px] font-bold">{newCount}</span>
+            )}
           </button>
         ))}
       </div>
 
+      {tab === "orders" && <OrdersAdmin />}
       {tab === "services" && <ServicesAdmin />}
       {tab === "portfolio" && <PortfolioAdmin />}
       {tab === "feedback" && <FeedbackAdmin />}
+    </div>
+  );
+}
+
+function OrdersAdmin() {
+  const [items, setItems] = useState<OrderRow[]>([]);
+  const [filter, setFilter] = useState<string>("all");
+
+  const load = () => supabase.from("service_orders").select("*").order("created_at", { ascending: false })
+    .then(({ data }) => setItems((data as OrderRow[]) ?? []));
+  useEffect(() => { load(); }, []);
+
+  const setStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from("service_orders").update({ status }).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Updated");
+    load();
+  };
+
+  const del = async (id: string) => {
+    if (!confirm("Delete this request?")) return;
+    await supabase.from("service_orders").delete().eq("id", id);
+    toast.success("Deleted");
+    load();
+  };
+
+  const filtered = filter === "all" ? items : items.filter(i => i.status === filter);
+  const STATUS_COLORS: Record<string, string> = {
+    new: "text-primary border-primary/40 bg-primary/10",
+    in_progress: "text-yellow-400 border-yellow-400/40 bg-yellow-400/10",
+    done: "text-green-400 border-green-400/40 bg-green-400/10",
+    cancelled: "text-muted-foreground border-border bg-muted/20",
+  };
+
+  return (
+    <div>
+      <div className="flex gap-1 mb-4 flex-wrap">
+        {["all", "new", "in_progress", "done", "cancelled"].map(s => (
+          <button
+            key={s}
+            onClick={() => setFilter(s)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase transition-all ${
+              filter === s ? "gradient-primary text-primary-foreground" : "glass text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {s.replace("_", " ")}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 && (
+        <p className="text-muted-foreground text-sm text-center py-12">No hire requests {filter !== "all" ? `in "${filter}"` : "yet"}.</p>
+      )}
+
+      <div className="space-y-3">
+        {filtered.map(o => (
+          <div key={o.id} className="glass-card rounded-2xl p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-display font-bold">{o.name}</h3>
+                  <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border ${STATUS_COLORS[o.status] || ""}`}>
+                    {o.status.replace("_", " ")}
+                  </span>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <a href={`mailto:${o.email}`} className="hover:text-primary">{o.email}</a>
+                  {o.phone && <> · <a href={`https://wa.me/${o.phone.replace(/[^0-9]/g, "")}`} target="_blank" rel="noreferrer" className="hover:text-primary">{o.phone}</a></>}
+                </div>
+              </div>
+              <button onClick={() => del(o.id)} className="p-2 glass rounded-lg hover:bg-destructive/20">
+                <Trash2 className="h-3.5 w-3.5 text-destructive" />
+              </button>
+            </div>
+
+            <div className="mb-3">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Service · {o.currency}</div>
+              <div className="font-semibold text-sm">{o.service_name}</div>
+            </div>
+
+            {o.message && (
+              <p className="text-sm text-muted-foreground border-l-2 border-primary/40 pl-3 mb-3 whitespace-pre-wrap">{o.message}</p>
+            )}
+
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60">
+                {new Date(o.created_at).toLocaleString()}
+              </span>
+              <div className="flex gap-1">
+                {["new", "in_progress", "done", "cancelled"].map(s => (
+                  <button
+                    key={s}
+                    onClick={() => setStatus(o.id, s)}
+                    disabled={o.status === s}
+                    className={`text-[10px] font-mono uppercase px-2 py-1 rounded-md transition-all ${
+                      o.status === s ? "gradient-primary text-primary-foreground" : "glass hover:bg-primary/10 text-muted-foreground"
+                    }`}
+                  >
+                    {s.replace("_", " ")}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

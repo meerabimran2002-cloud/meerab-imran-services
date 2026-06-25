@@ -20,6 +20,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { AiAssistant } from "@/components/AiAssistant";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { CartProvider } from "@/hooks/useCart";
+import { CartDrawer } from "@/components/CartDrawer";
 
 function NotFoundComponent() {
   return (
@@ -112,16 +114,19 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <SettingsProvider>
         <AuthProvider>
-          <ScrollProgress />
-          <AnimatedBackground />
-          <Navbar />
-          <main className="pt-24 min-h-screen">
-            <Outlet />
-          </main>
-          <Footer />
-          <AiAssistant />
-          <CustomCursor />
-          <Toaster />
+          <CartProvider>
+            <ScrollProgress />
+            <AnimatedBackground />
+            <Navbar />
+            <main className="pt-24 min-h-screen">
+              <Outlet />
+            </main>
+            <Footer />
+            <AiAssistant />
+            <CartDrawer />
+            <CustomCursor />
+            <Toaster />
+          </CartProvider>
         </AuthProvider>
       </SettingsProvider>
     </QueryClientProvider>

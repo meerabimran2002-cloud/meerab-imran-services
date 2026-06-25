@@ -57,24 +57,24 @@ export function AiAssistant() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 left-6 z-40 w-[min(92vw,380px)] glass-card rounded-2xl overflow-hidden animate-fade-up flex flex-col" style={{ maxHeight: "70vh" }}>
-          <div className="flex items-center gap-3 p-4 border-b border-border/50">
+        <div className="fixed bottom-24 left-6 z-40 w-[min(92vw,380px)] rounded-2xl overflow-hidden animate-fade-up flex flex-col border border-white/10 shadow-2xl" style={{ maxHeight: "70vh", background: "rgba(8, 10, 14, 0.96)", backdropFilter: "blur(24px)" }}>
+          <div className="flex items-center gap-3 p-4 border-b border-white/10" style={{ background: "rgba(0,0,0,0.4)" }}>
             <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">
               <Sparkles className="h-4 w-4 text-primary-foreground" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-display font-semibold text-sm">Meera AI</div>
-              <div className="text-xs text-muted-foreground">Online • Powered by AI</div>
+              <div className="font-display font-semibold text-sm text-white">Meera AI</div>
+              <div className="text-xs text-white/60">Online • Powered by AI</div>
             </div>
           </div>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: "rgba(0,0,0,0.35)" }}>
             {messages.map(m => {
               const text = m.parts.map(p => (p.type === "text" ? p.text : "")).join("");
               const mine = m.role === "user";
               return (
                 <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed whitespace-pre-wrap ${mine ? "gradient-primary text-primary-foreground" : "bg-muted/50 border border-border/50 text-foreground"}`}>
+                  <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed whitespace-pre-wrap ${mine ? "gradient-primary text-primary-foreground" : "text-white"}`} style={mine ? undefined : { background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)" }}>
                     {text || (busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null)}
                   </div>
                 </div>
@@ -82,17 +82,17 @@ export function AiAssistant() {
             })}
             {busy && messages[messages.length - 1]?.role === "user" && (
               <div className="flex justify-start">
-                <div className="bg-muted/50 border border-border/50 rounded-2xl px-3.5 py-2">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
+                <div className="rounded-2xl px-3.5 py-2" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-white/70" />
                 </div>
               </div>
             )}
           </div>
 
           {messages.length <= 1 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-1.5">
+            <div className="px-4 pb-2 flex flex-wrap gap-1.5" style={{ background: "rgba(0,0,0,0.35)" }}>
               {SUGGESTIONS.map(s => (
-                <button key={s} onClick={() => submit(s)} className="text-xs px-2.5 py-1 rounded-full border border-border/60 hover:border-primary/50 hover:bg-primary/10 transition-colors text-muted-foreground hover:text-foreground">
+                <button key={s} onClick={() => submit(s)} className="text-xs px-2.5 py-1 rounded-full border border-white/15 hover:border-primary/60 hover:bg-primary/15 transition-colors text-white/70 hover:text-white">
                   {s}
                 </button>
               ))}
@@ -101,13 +101,15 @@ export function AiAssistant() {
 
           <form
             onSubmit={e => { e.preventDefault(); submit(); }}
-            className="p-3 border-t border-border/50 flex items-center gap-2"
+            className="p-3 border-t border-white/10 flex items-center gap-2"
+            style={{ background: "rgba(0,0,0,0.4)" }}
           >
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Ask me anything..."
-              className="flex-1 bg-background/60 border border-border/60 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary/60"
+              className="flex-1 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary/60 text-white placeholder:text-white/40"
+              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}
               disabled={busy}
             />
             <button

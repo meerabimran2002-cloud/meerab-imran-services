@@ -41,10 +41,7 @@ function Home() {
           [ status: available_for_work ]
         </div>
 
-        <h1
-          className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter"
-          style={{ WebkitTextStroke: "1px rgba(255,255,255,0.12)", color: "transparent" }}
-        >
+        <h1 className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-foreground">
           Meerab
         </h1>
         <h1 className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-primary -mt-[2vw]">

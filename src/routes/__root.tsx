@@ -126,6 +126,7 @@ function RootComponent() {
             <AiAssistant />
             <CartDrawer />
             <CustomCursor />
+            <QuickActions />
             <Toaster />
           </CartProvider>
         </AuthProvider>

@@ -22,6 +22,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { CartProvider } from "@/hooks/useCart";
 import { CartDrawer } from "@/components/CartDrawer";
+import { QuickActions } from "@/components/QuickActions";
 
 function NotFoundComponent() {
   return (

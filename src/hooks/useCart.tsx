@@ -85,7 +85,12 @@ export function formatPrice(priceRange: string, currency: "USD" | "PKR", rate: n
   const nums = matches.map(m => parseInt(m.replace(/,/g, ""), 10));
   const fmt = (n: number) => {
     if (currency === "USD") return `$${n.toLocaleString("en-US")}`;
-    const pkr = Math.round((n * rate) / 1000) * 1000;
+    // Round to nearest 500 PKR for cleaner display
+    const pkr = Math.round((n * rate) / 500) * 500;
+    if (pkr >= 100000) {
+      const lac = pkr / 100000;
+      return `Rs ${lac % 1 === 0 ? lac.toFixed(0) : lac.toFixed(2)} Lac`;
+    }
     return `Rs ${pkr.toLocaleString("en-PK")}`;
   };
   return nums.map(fmt).join(" – ");

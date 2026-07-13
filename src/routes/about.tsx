@@ -38,15 +38,13 @@ function About() {
 
       <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
         <div className="relative animate-fade-up">
-          <div className="absolute -inset-4 gradient-primary opacity-20 blur-3xl rounded-full animate-glow-pulse" />
-          <div className="relative glass-card rounded-3xl p-3 animate-float">
+          <div className="absolute -inset-2 gradient-primary opacity-10 blur-2xl rounded-full" />
+          <div className="relative glass-card rounded-3xl p-3">
             <img
-              src={profile}
+              src={profile.url}
               alt="Meerab Imran"
               loading="lazy"
-              width={768}
-              height={896}
-              className="rounded-2xl w-full"
+              className="rounded-2xl w-full max-w-sm mx-auto"
             />
           </div>
         </div>

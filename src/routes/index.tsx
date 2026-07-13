@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import meerabPortrait from "@/assets/meerab-portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({

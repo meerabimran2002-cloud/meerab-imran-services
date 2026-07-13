@@ -45,7 +45,7 @@ export function AiAssistant() {
       <button
         onClick={() => setOpen(v => !v)}
         aria-label="Open AI assistant"
-        className="btn-3d fixed bottom-6 left-6 z-40 flex h-14 w-14 items-center justify-center rounded-full gradient-primary text-primary-foreground shadow-lg glow"
+        className="btn-3d fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full gradient-primary text-primary-foreground shadow-lg glow"
       >
         {open ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
         {!open && (
@@ -57,7 +57,7 @@ export function AiAssistant() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 left-6 z-40 w-[min(92vw,380px)] rounded-2xl overflow-hidden animate-fade-up flex flex-col border border-white/10 shadow-2xl" style={{ maxHeight: "70vh", background: "rgba(8, 10, 14, 0.96)", backdropFilter: "blur(24px)" }}>
+        <div className="fixed bottom-24 right-6 z-40 w-[min(92vw,380px)] rounded-2xl overflow-hidden animate-fade-up flex flex-col border border-white/10 shadow-2xl" style={{ maxHeight: "70vh", background: "rgba(8, 10, 14, 0.96)", backdropFilter: "blur(24px)" }}>
           <div className="flex items-center gap-3 p-4 border-b border-white/10" style={{ background: "rgba(0,0,0,0.4)" }}>
             <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">
               <Sparkles className="h-4 w-4 text-primary-foreground" />

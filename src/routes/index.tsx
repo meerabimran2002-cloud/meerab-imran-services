@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import meerabPortrait from "@/assets/meerab-portrait.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,29 +36,47 @@ function Home() {
   return (
     <div className="mx-auto max-w-6xl px-6">
       {/* HERO */}
-      <section className="relative pt-10 pb-32">
-        <div className={`${mono} text-primary mb-8 flex items-center gap-2`}>
+      <section className="relative pt-10 pb-24 md:pb-32">
+        <div className={`${mono} text-primary mb-6 md:mb-8 flex items-center gap-2`}>
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
           [ status: available_for_work ]
         </div>
 
-        <h1 className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-foreground">
-          Meerab
-        </h1>
-        <h1 className="text-[14vw] md:text-[12vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-primary -mt-[2vw]">
-          Imran
-        </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-7 order-2 lg:order-1">
+            <h1 className="text-[16vw] sm:text-[14vw] lg:text-[10vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-foreground">
+              Meerab
+            </h1>
+            <h1 className="text-[16vw] sm:text-[14vw] lg:text-[10vw] font-extrabold leading-[0.85] uppercase tracking-tighter text-primary -mt-[2vw]">
+              Imran
+            </h1>
+          </div>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-          <p className="md:col-span-7 text-xl md:text-2xl leading-snug font-light text-foreground/90 max-w-xl">
-            A programmer and web developer from Pakistan, building performance-heavy digital experiences with surgical precision.
-          </p>
-          <div className={`md:col-span-5 ${mono} flex flex-col items-start md:items-end gap-1`}>
-            <span className="text-primary">01 // FULL-STACK DEVELOPER</span>
+          <div className="lg:col-span-5 order-1 lg:order-2 relative">
+            <div className="relative mx-auto max-w-[320px] lg:max-w-none">
+              <div className="absolute -inset-4 rounded-3xl bg-primary/30 blur-3xl opacity-70" />
+              <div className="absolute -inset-1 rounded-3xl gradient-primary opacity-40 blur-xl" />
+              <div className="relative overflow-hidden rounded-3xl border border-primary/30 shadow-2xl">
+                <img
+                  src={meerabPortrait.url}
+                  alt="Meerab Imran"
+                  className="w-full h-auto object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              </div>
+              <div className={`absolute -bottom-3 -left-3 md:-bottom-4 md:-left-4 ${mono} bg-primary text-primary-foreground px-3 py-2 rounded-lg shadow-lg`}>
+                ★ 4.9 / 120+ projects
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap gap-3">
+        <p className="mt-10 md:mt-14 text-lg md:text-2xl leading-snug font-light text-foreground/90 max-w-2xl">
+          A programmer and web developer from Pakistan, building performance-heavy digital experiences with surgical precision.
+        </p>
+
+        <div className="mt-8 md:mt-12 flex flex-wrap gap-3">
           <Link
             to="/feedback"
             className="group inline-flex items-center gap-3 bg-primary text-primary-foreground font-bold uppercase tracking-wider text-sm px-6 py-4 hover:bg-foreground transition-colors"

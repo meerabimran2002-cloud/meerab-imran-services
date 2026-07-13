@@ -114,26 +114,46 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden glass-card mx-4 mt-2 rounded-2xl p-4 animate-fade-up">
-          <ul className="flex flex-col gap-2">
-            {links.map((l) => (
-              <li key={l.to}>
-                <Link
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className="block px-3 py-2 rounded-lg text-sm hover:bg-primary/10"
-                >
-                  {l.label}
+        <>
+          <div className="md:hidden fixed inset-0 top-20 z-40 bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <div
+            className="md:hidden relative z-50 mx-4 mt-2 rounded-2xl p-4 animate-fade-up border border-primary/30 shadow-2xl"
+            style={{ background: "rgba(8, 10, 14, 0.98)", backdropFilter: "blur(24px)" }}
+          >
+            <ul className="flex flex-col gap-1">
+              {links.map((l) => {
+                const active = location.pathname === l.to;
+                return (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      onClick={() => setOpen(false)}
+                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        active ? "bg-primary/15 text-foreground border border-primary/30" : "text-white/80 hover:bg-primary/10 hover:text-white border border-transparent"
+                      }`}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="pt-2 mt-2 border-t border-white/10">
+                <Link to="/admin" onClick={() => setOpen(false)} className="block px-4 py-3 rounded-lg text-sm text-white/70 hover:bg-primary/10 hover:text-white">
+                  {isAdmin ? t("dashboard") : t("admin")}
                 </Link>
               </li>
-            ))}
-            <li>
-              <Link to="/admin" onClick={() => setOpen(false)} className="block px-3 py-2 rounded-lg text-sm hover:bg-primary/10">
-                {isAdmin ? t("dashboard") : t("admin")}
-              </Link>
-            </li>
-          </ul>
-        </div>
+              <li>
+                <Link
+                  to="/services"
+                  onClick={() => setOpen(false)}
+                  className="block text-center gradient-primary text-primary-foreground font-medium text-sm px-4 py-3 rounded-lg mt-2"
+                >
+                  {t("hire")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </>
       )}
     </header>
   );

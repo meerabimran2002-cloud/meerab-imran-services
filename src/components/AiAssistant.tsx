@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { Bot, Send, X, Sparkles, Loader2 } from "lucide-react";
@@ -19,11 +19,17 @@ const WELCOME: UIMessage = {
 export function AiAssistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [error, setError] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []);
 
   const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    id: "meera-ai-assistant",
+    transport,
     messages: [WELCOME],
+    onError: () => {
+      setError("AI reply process nahi ho saka. Please dobara try karein.");
+    },
   });
 
   const busy = status === "submitted" || status === "streaming";
@@ -35,8 +41,13 @@ export function AiAssistant() {
   const submit = async (text?: string) => {
     const v = (text ?? input).trim();
     if (!v || busy) return;
+    setError("");
     setInput("");
-    await sendMessage({ text: v });
+    try {
+      await sendMessage({ text: v });
+    } catch {
+      setError("AI reply process nahi ho saka. Please dobara try karein.");
+    }
   };
 
   return (
@@ -92,10 +103,16 @@ export function AiAssistant() {
           {messages.length <= 1 && (
             <div className="px-4 pb-2 flex flex-wrap gap-1.5" style={{ background: "rgba(0,0,0,0.35)" }}>
               {SUGGESTIONS.map(s => (
-                <button key={s} onClick={() => submit(s)} className="text-xs px-2.5 py-1 rounded-full border border-white/15 hover:border-primary/60 hover:bg-primary/15 transition-colors text-white/70 hover:text-white">
+                <button key={s} onClick={() => submit(s)} disabled={busy} className="text-xs px-2.5 py-1 rounded-full border border-white/15 hover:border-primary/60 hover:bg-primary/15 transition-colors text-white/70 hover:text-white disabled:opacity-50">
                   {s}
                 </button>
               ))}
+            </div>
+          )}
+
+          {error && (
+            <div className="px-4 py-2 text-xs text-white/80 border-t border-white/10" style={{ background: "rgba(127,29,29,0.35)" }}>
+              {error}
             </div>
           )}
 

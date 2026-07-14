@@ -108,7 +108,7 @@ export function AiAssistant() {
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Ask me anything..."
-              className="flex-1 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary/60 text-white placeholder:text-white/40"
+              className="flex-1 rounded-lg px-3 py-2 text-base sm:text-sm focus:outline-none focus:border-primary/60 text-white placeholder:text-white/40"
               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}
               disabled={busy}
             />

@@ -2,6 +2,13 @@ import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 
+const ERROR_MESSAGE = "Sorry, AI abhi reply process nahi kar pa raha. Please thori dair baad dobara try karein ya Meerab ko email kar dein: meerab.imran.2002@gmail.com";
+
+function errorText(error: unknown) {
+  console.error("AI chat failed", error);
+  return ERROR_MESSAGE;
+}
+
 const SYSTEM = `You are "Meera AI" — the friendly assistant for Meerab Imran's freelance studio website.
 
 About Meerab:
@@ -30,12 +37,18 @@ export const Route = createFileRoute("/api/chat")({
 
         const gateway = createLovableAiGatewayProvider(key);
         const result = streamText({
-          model: gateway("google/gemini-3-flash-preview"),
+          model: gateway("openai/gpt-5.5"),
           system: SYSTEM,
           messages: await convertToModelMessages(messages),
+          onError: ({ error }) => {
+            console.error("AI stream failed", error);
+          },
         });
 
-        return result.toUIMessageStreamResponse({ originalMessages: messages });
+        return result.toUIMessageStreamResponse({
+          originalMessages: messages,
+          onError: errorText,
+        });
       },
     },
   },

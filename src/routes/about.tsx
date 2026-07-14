@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import profile from "@/assets/meerab-dp.jpg.asset.json";
+import profile from "@/assets/meerab-new.jpg.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -38,13 +38,12 @@ function About() {
 
       <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
         <div className="relative animate-fade-up">
-          <div className="absolute -inset-2 gradient-primary opacity-10 blur-2xl rounded-full" />
-          <div className="relative glass-card rounded-3xl p-3">
+          <div className="absolute -inset-2 gradient-primary opacity-5 blur-2xl rounded-full" />
+          <div className="relative glass-card rounded-3xl p-3 max-w-xs mx-auto">
             <img
               src={profile.url}
               alt="Meerab Imran"
-              loading="lazy"
-              className="rounded-2xl w-full max-w-sm mx-auto"
+              className="rounded-2xl w-full aspect-[3/4] object-cover"
             />
           </div>
         </div>

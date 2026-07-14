@@ -57,7 +57,7 @@ export function AiAssistant() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-40 w-[min(92vw,380px)] rounded-2xl overflow-hidden animate-fade-up flex flex-col border border-white/10 shadow-2xl" style={{ maxHeight: "70vh", background: "rgba(8, 10, 14, 0.96)", backdropFilter: "blur(24px)" }}>
+        <div className="fixed z-40 rounded-2xl overflow-hidden animate-fade-up flex flex-col border border-white/10 shadow-2xl inset-x-4 bottom-24 sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[380px]" style={{ maxHeight: "min(70dvh, 600px)", background: "rgba(8, 10, 14, 0.96)", backdropFilter: "blur(24px)" }}>
           <div className="flex items-center gap-3 p-4 border-b border-white/10" style={{ background: "rgba(0,0,0,0.4)" }}>
             <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">
               <Sparkles className="h-4 w-4 text-primary-foreground" />
@@ -108,7 +108,7 @@ export function AiAssistant() {
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Ask me anything..."
-              className="flex-1 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary/60 text-white placeholder:text-white/40"
+              className="flex-1 rounded-lg px-3 py-2 text-base sm:text-sm focus:outline-none focus:border-primary/60 text-white placeholder:text-white/40"
               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" }}
               disabled={busy}
             />

@@ -123,7 +123,7 @@ function RootComponent() {
               <Outlet />
             </main>
             <Footer />
-            <AiAssistant />
+            
             <CartDrawer />
             <CustomCursor />
             <QuickActions />

@@ -38,15 +38,14 @@ function About() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-        <div className="relative animate-fade-up">
-          <div className="absolute inset-8 gradient-primary opacity-5 blur-2xl rounded-full" />
-          <div className="relative glass-card rounded-3xl p-2.5 w-full max-w-[220px] sm:max-w-xs mx-auto">
+        <div className="relative animate-fade-up flex justify-center">
+          <div className="relative glass-card rounded-3xl p-2.5 w-full max-w-[240px] sm:max-w-xs">
             <img
               src={profile}
               alt="Meerab Imran"
               width={720}
-              height={1280}
-              className="rounded-2xl w-full aspect-[3/4] object-cover object-[62%_36%]"
+              height={960}
+              className="rounded-2xl w-full aspect-[3/4] object-cover"
               decoding="async"
             />
           </div>

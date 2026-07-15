@@ -56,7 +56,7 @@ export function AiAssistant() {
       <button
         onClick={() => setOpen(v => !v)}
         aria-label="Open AI assistant"
-        className="btn-3d fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full gradient-primary text-primary-foreground shadow-lg glow"
+        className="btn-3d fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full gradient-primary text-primary-foreground shadow-lg glow"
       >
         {open ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
         {!open && (

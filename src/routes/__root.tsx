@@ -17,7 +17,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { AuthProvider } from "@/hooks/useAuth";
 import { SettingsProvider } from "@/hooks/useSettings";
 import { Toaster } from "@/components/ui/sonner";
-import { AiAssistant } from "@/components/AiAssistant";
+
 import { CustomCursor } from "@/components/CustomCursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { CartProvider } from "@/hooks/useCart";
@@ -123,7 +123,7 @@ function RootComponent() {
               <Outlet />
             </main>
             <Footer />
-            <AiAssistant />
+            
             <CartDrawer />
             <CustomCursor />
             <QuickActions />

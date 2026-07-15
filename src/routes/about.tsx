@@ -35,21 +35,8 @@ function About() {
         </h1>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-        <div className="relative animate-fade-up flex justify-center group [perspective:1200px]">
-          <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-primary/30 via-primary/10 to-transparent blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 animate-pulse" />
-          <div className="relative glass-card rounded-3xl p-2.5 w-full max-w-[240px] sm:max-w-xs transition-transform duration-700 ease-out group-hover:[transform:rotateY(-8deg)_rotateX(4deg)_translateY(-6px)] animate-float-slow">
-            <img
-              src={profile}
-              alt="Meerab Imran"
-              width={720}
-              height={960}
-              className="rounded-2xl w-full aspect-[3/4] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              decoding="async"
-            />
-            <div className="pointer-events-none absolute inset-2.5 rounded-2xl ring-1 ring-white/10" />
-          </div>
-        </div>
+      <div className="grid md:grid-cols-1 gap-12 items-center mb-24 max-w-3xl mx-auto">
+
 
         <div className="animate-fade-up delay-200">
           <h2 className="font-display text-3xl font-bold mb-4">

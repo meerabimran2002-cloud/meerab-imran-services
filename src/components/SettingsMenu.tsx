@@ -31,7 +31,7 @@ export function SettingsMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-80 rounded-2xl p-1 z-50 animate-fade-up overflow-hidden border border-white/10 shadow-2xl" style={{ background: "rgba(8,10,14,0.98)", backdropFilter: "blur(24px)" }}>
+        <div className="absolute right-0 mt-2 w-80 rounded-2xl p-1 z-50 animate-fade-up overflow-hidden border border-border shadow-2xl bg-popover text-popover-foreground" style={{ backdropFilter: "blur(24px)" }}>
           {/* Unified tab header */}
           <div className="flex gap-1 p-1 m-2 mb-3 rounded-xl bg-background/40">
             <button

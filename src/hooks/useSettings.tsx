@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type ThemeId =
-  | "volt" | "cosmic" | "midnight" | "emerald" | "crimson" | "slate"
-  | "sunrise" | "mint" | "rose" | "paper";
+export type ThemeId = "volt" | "cosmic" | "sunrise" | "paper";
 export type LangId = "en" | "ur" | "ar" | "de" | "fr";
 
 export interface ThemeMeta {
@@ -15,13 +13,7 @@ export interface ThemeMeta {
 export const THEMES: ThemeMeta[] = [
   { id: "volt", label: "Techno Volt", swatch: "linear-gradient(135deg,#000,#c2ff3d)", mode: "dark" },
   { id: "cosmic", label: "Cosmic Purple", swatch: "linear-gradient(135deg,#8b5cf6,#3b82f6)", mode: "dark" },
-  { id: "midnight", label: "Midnight Blue", swatch: "linear-gradient(135deg,#1e3a8a,#0ea5e9)", mode: "dark" },
-  { id: "emerald", label: "Emerald Night", swatch: "linear-gradient(135deg,#10b981,#0d9488)", mode: "dark" },
-  { id: "crimson", label: "Crimson Dark", swatch: "linear-gradient(135deg,#dc2626,#f59e0b)", mode: "dark" },
-  { id: "slate", label: "Slate Mono", swatch: "linear-gradient(135deg,#475569,#94a3b8)", mode: "dark" },
   { id: "sunrise", label: "Sunrise Light", swatch: "linear-gradient(135deg,#fff7ed,#fb923c)", mode: "light" },
-  { id: "mint", label: "Mint Light", swatch: "linear-gradient(135deg,#ecfdf5,#10b981)", mode: "light" },
-  { id: "rose", label: "Rose Light", swatch: "linear-gradient(135deg,#fff1f2,#f43f5e)", mode: "light" },
   { id: "paper", label: "Paper Mono", swatch: "linear-gradient(135deg,#fafafa,#52525b)", mode: "light" },
 ];
 
